@@ -1,0 +1,13 @@
+{
+  "scripts": {
+    "start": "nest start",
+    "dev": "nest start --watch",
+    "start:prod": "node dist/main.js",
+    "build": "nest build",
+    "lint": "eslint .",
+    "format": "prettier --write \"src/**/*.ts\""
+  },
+  "dependencies": {
+    "@nestjs/cli": "^11.0.16"
+  }
+}
