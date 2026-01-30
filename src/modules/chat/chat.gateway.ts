@@ -25,7 +25,11 @@ export class ChatGateway
       userId: client.id,
     });
 
-    client.emit('room_list', this.chatService.getRooms());
+    const allRooms = this.chatService.getRoomsDetailed();
+    const accessibleRooms = allRooms.filter(room =>
+      this.chatService.canAccessRoom(room.roomId, client.id)
+    );
+    client.emit('room_list', accessibleRooms);
   }
 
   handleDisconnect(client: Socket) {
@@ -78,9 +82,9 @@ export class ChatGateway
 
   @SubscribeMessage('get_rooms')
   handleGetRooms(client: Socket) {
-    const allRooms = this.chatService.getRooms();
-    const accessibleRooms = allRooms.filter(roomId =>
-      this.chatService.canAccessRoom(roomId, client.id)
+    const allRooms = this.chatService.getRoomsDetailed();
+    const accessibleRooms = allRooms.filter(room =>
+      this.chatService.canAccessRoom(room.roomId, client.id)
     );
     client.emit('room_list', accessibleRooms);
   }

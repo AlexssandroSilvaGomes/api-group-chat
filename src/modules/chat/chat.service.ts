@@ -81,6 +81,14 @@ export class ChatService {
     return [...this.rooms.keys()];
   }
 
+  getRoomsDetailed() {
+    return [...this.rooms.entries()].map(([roomId, room]) => ({
+      roomId,
+      isPrivate: room.isPrivate,
+      creatorId: room.creatorId,
+    }));
+  }
+
   getRoomsByUserId(userId: string) {
     return [...this.rooms.entries()]
       .filter(([_, room]) => room.users.has(userId))
